@@ -1,0 +1,463 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>utils (utility library) &mdash; newschain 1 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+    <link rel="top" title="newschain 1 documentation" href="index.html"/>
+        <link rel="prev" title="snap_cluster_lib (overlapping community detection)" href="snap_cluster_lib.html"/> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-nav-search">
+        
+
+        
+          <a href="index.html" class="icon icon-home"> newschain
+        
+
+        
+        </a>
+
+        
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+        
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+        
+          
+          
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="analyse.html">analyse (article cluster creation)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="sim_lib.html">sim_lib (similarity query)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="snap_cluster_lib.html">snap_cluster_lib (overlapping community detection)</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="">utils (utility library)</a></li>
+</ul>
+
+          
+        
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="index.html">newschain</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="index.html">Docs</a> &raquo;</li>
+      
+    <li>utils (utility library)</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="_sources/utils.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document">
+            
+  <div class="section" id="module-utils">
+<span id="utils-utility-library"></span><h1>utils (utility library)<a class="headerlink" href="#module-utils" title="Permalink to this headline">¶</a></h1>
+<p>Utility library</p>
+<dl class="docutils">
+<dt>Contains functions for</dt>
+<dd><ul class="first last simple">
+<li>Loading of articles</li>
+<li>Loading of clusters</li>
+<li>Creating the database of articles</li>
+<li>Initial cleaning of the raw csv data from crawler</li>
+</ul>
+</dd>
+</dl>
+<dl class="class">
+<dt id="utils.FileList">
+<em class="property">class </em><code class="descclassname">utils.</code><code class="descname">FileList</code><span class="sig-paren">(</span><em>folder_path</em><span class="sig-paren">)</span><a class="headerlink" href="#utils.FileList" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<p>Object that hold lists of files and creates a database from them.</p>
+<dl class="method">
+<dt id="utils.FileList.__init__">
+<code class="descname">__init__</code><span class="sig-paren">(</span><em>folder_path</em><span class="sig-paren">)</span><a class="headerlink" href="#utils.FileList.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Builds a list of files (file_list) and csv files (csv_list) from a
+given folder path.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>folder_path</strong> (<em>str</em>) &#8211; Path of the folder to build file_list and
+csv_list from</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="utils.FileList.display_all">
+<code class="descname">display_all</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#utils.FileList.display_all" title="Permalink to this definition">¶</a></dt>
+<dd><p>Prints file_list.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="utils.FileList.display_csv">
+<code class="descname">display_csv</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#utils.FileList.display_csv" title="Permalink to this definition">¶</a></dt>
+<dd><p>Prints csv_list.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="utils.FileList.find_csv">
+<code class="descname">find_csv</code><span class="sig-paren">(</span><em>key</em><span class="sig-paren">)</span><a class="headerlink" href="#utils.FileList.find_csv" title="Permalink to this definition">¶</a></dt>
+<dd><p>Used to load csv files for a specific database. For example,
+find_csv(&#8220;NYT&#8221;) will return every csv file with NYT in its file name.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>key</strong> (<em>str</em>) &#8211; A keyword which every file&#8217;s name must contain</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">A list of csv files where every file&#8217;s name contains the key</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">list</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="utils.FileList.get_csv">
+<code class="descname">get_csv</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#utils.FileList.get_csv" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">A list of csv files</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">list</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="utils.FileList.sqlite_build_nyt_full">
+<code class="descname">sqlite_build_nyt_full</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#utils.FileList.sqlite_build_nyt_full" title="Permalink to this definition">¶</a></dt>
+<dd><p>Construct database for NYT.</p>
+<dl class="docutils">
+<dt>Format</dt>
+<dd><ul class="first last simple">
+<li>name (text) PRIMARY KEY</li>
+<li>section (text)</li>
+<li>date (datetime)</li>
+<li>wordcnt (int)</li>
+<li>summary (text)</li>
+<li>id (int)</li>
+</ul>
+</dd>
+</dl>
+<p>name, rather than id is the primary key for this database to remove
+articles with duplicate names. All the text fields involve a conversion
+to unicode, with any errors being ignored. This does lead to some
+weird characters in the processed text, although this should not have
+an impact on the results.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="utils.create_nyt_cluster_database">
+<code class="descclassname">utils.</code><code class="descname">create_nyt_cluster_database</code><span class="sig-paren">(</span><em>database_name</em>, <em>all_clusters</em><span class="sig-paren">)</span><a class="headerlink" href="#utils.create_nyt_cluster_database" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates a database to store computed clusters for subsequent chaining.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>database_name</strong> (<em>str</em>) &#8211; Name of the database to store computed clusters to</li>
+<li><strong>all_cluster</strong> (<em>list</em>) &#8211; A list of computed clusters</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="utils.get_time">
+<code class="descclassname">utils.</code><code class="descname">get_time</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#utils.get_time" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets current system time</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">Current system time</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">str</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="utils.load_csv">
+<code class="descclassname">utils.</code><code class="descname">load_csv</code><span class="sig-paren">(</span><em>file_name</em><span class="sig-paren">)</span><a class="headerlink" href="#utils.load_csv" title="Permalink to this definition">¶</a></dt>
+<dd><p>Loads the CSV file with the given filename.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>file_name</strong> (<em>str</em>) &#8211; Name of a csv file</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Each item is a single row in the provided CSV file</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">list</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="utils.load_nyt">
+<code class="descclassname">utils.</code><code class="descname">load_nyt</code><span class="sig-paren">(</span><em>section_name='World'</em>, <em>start_date='2014-01-01'</em>, <em>end_date='2015-01-01'</em>, <em>keywords=''</em><span class="sig-paren">)</span><a class="headerlink" href="#utils.load_nyt" title="Permalink to this definition">¶</a></dt>
+<dd><p>Loads data from SQLite DB</p>
+<dl class="docutils">
+<dt>SQLite DB requires the following format</dt>
+<dd><ul class="first last simple">
+<li>name (text)</li>
+<li>section (text)</li>
+<li>date (datetime)</li>
+<li>wordcnt (int)</li>
+<li>summary (text)</li>
+<li>id (int)</li>
+</ul>
+</dd>
+</dl>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>section_name</strong> (<em>str</em>) &#8211; Name of a section, either &#8220;World&#8221; or &#8220;US&#8221;.
+May also be blank to load from both.</li>
+<li><strong>start_date</strong> (<em>date</em>) &#8211; Articles loaded will be published after this date</li>
+<li><strong>end_date</strong> (<em>date</em>) &#8211; Articles loaded will be published before this date</li>
+<li><strong>keywords</strong> (<em>str</em>) &#8211; Keywords, each separated by a single space to
+restrict the articles loaded. e.g. &#8220;china israel&#8221;</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Each item in the list is an article loaded from the SQLite DB</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">list</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="utils.load_nyt_by_article_id">
+<code class="descclassname">utils.</code><code class="descname">load_nyt_by_article_id</code><span class="sig-paren">(</span><em>article_id</em><span class="sig-paren">)</span><a class="headerlink" href="#utils.load_nyt_by_article_id" title="Permalink to this definition">¶</a></dt>
+<dd><p>Loads an article from SQLite DB</p>
+<dl class="docutils">
+<dt>SQLite DB requires the following format</dt>
+<dd><ul class="first last simple">
+<li>name text,</li>
+<li>section text,</li>
+<li>date datetime,</li>
+<li>wordcnt int,</li>
+<li>summary text,</li>
+<li>id int</li>
+</ul>
+</dd>
+</dl>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>article_id</strong> (<em>int</em>) &#8211; The ID of an article</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">A list with a single item, the article if it exists in the
+database. Otherwise a blank list is returned</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">list</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="utils.load_nyt_clusters">
+<code class="descclassname">utils.</code><code class="descname">load_nyt_clusters</code><span class="sig-paren">(</span><em>start_date=None</em>, <em>end_date=None</em>, <em>db_name='NewYT_clustered.db'</em><span class="sig-paren">)</span><a class="headerlink" href="#utils.load_nyt_clusters" title="Permalink to this definition">¶</a></dt>
+<dd><p>Loads clusters from a specified database.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>start_date</strong> (<em>datetime</em>) &#8211; The earliest published article in the cluster
+must be published on or after this date</li>
+<li><strong>end_date</strong> (<em>datetime</em>) &#8211; The earliest published article in the cluster
+must be published on or before this date</li>
+<li><strong>db_name</strong> (<em>str</em>) &#8211; The name of the database of clusters to load from</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">A list containing the clusters that were selected by the query.
+Each row in the list is a single cluster</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">list</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="utils.log_to_file">
+<code class="descclassname">utils.</code><code class="descname">log_to_file</code><span class="sig-paren">(</span><em>program_name</em><span class="sig-paren">)</span><a class="headerlink" href="#utils.log_to_file" title="Permalink to this definition">¶</a></dt>
+<dd><p>Prepares configuration for logging for a specific program.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>program_name</strong> (<em>str</em>) &#8211; Name of a program (usually a .py file)</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="utils.sqlite_test">
+<code class="descclassname">utils.</code><code class="descname">sqlite_test</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#utils.sqlite_test" title="Permalink to this definition">¶</a></dt>
+<dd><p>Tests if the database has been loaded correctly.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="utils.stdout_redirect">
+<code class="descclassname">utils.</code><code class="descname">stdout_redirect</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwds</em><span class="sig-paren">)</span><a class="headerlink" href="#utils.stdout_redirect" title="Permalink to this definition">¶</a></dt>
+<dd><p>Redirects stdout to the given stream.</p>
+</dd></dl>
+
+</div>
+
+
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+      
+        <a href="snap_cluster_lib.html" class="btn btn-neutral" title="snap_cluster_lib (overlapping community detection)" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2015, Mark.
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'1',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

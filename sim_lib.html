@@ -1,0 +1,328 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>sim_lib (similarity query) &mdash; newschain 1 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+    <link rel="top" title="newschain 1 documentation" href="index.html"/>
+        <link rel="next" title="snap_cluster_lib (overlapping community detection)" href="snap_cluster_lib.html"/>
+        <link rel="prev" title="analyse (article cluster creation)" href="analyse.html"/> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-nav-search">
+        
+
+        
+          <a href="index.html" class="icon icon-home"> newschain
+        
+
+        
+        </a>
+
+        
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+        
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+        
+          
+          
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="analyse.html">analyse (article cluster creation)</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="">sim_lib (similarity query)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="snap_cluster_lib.html">snap_cluster_lib (overlapping community detection)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="utils.html">utils (utility library)</a></li>
+</ul>
+
+          
+        
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="index.html">newschain</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="index.html">Docs</a> &raquo;</li>
+      
+    <li>sim_lib (similarity query)</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="_sources/sim_lib.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document">
+            
+  <div class="section" id="module-sim_lib">
+<span id="sim-lib-similarity-query"></span><h1>sim_lib (similarity query)<a class="headerlink" href="#module-sim_lib" title="Permalink to this headline">¶</a></h1>
+<p>Class for performing similarity query</p>
+<dl class="class">
+<dt id="sim_lib.SimMatrix">
+<em class="property">class </em><code class="descclassname">sim_lib.</code><code class="descname">SimMatrix</code><span class="sig-paren">(</span><em>data</em>, <em>refresh=False</em>, <em>clusters=True</em><span class="sig-paren">)</span><a class="headerlink" href="#sim_lib.SimMatrix" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<dl class="method">
+<dt id="sim_lib.SimMatrix.__init__">
+<code class="descname">__init__</code><span class="sig-paren">(</span><em>data</em>, <em>refresh=False</em>, <em>clusters=True</em><span class="sig-paren">)</span><a class="headerlink" href="#sim_lib.SimMatrix.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Does the processing on the data before performing a similarity
+query. This entails a conversion of the data into a LSI space. It has
+added ability to save and load indexes / dictionaries, so that if the
+same set of data is used (refresh=False), the code is sped up.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>data</strong> (<em>list</em>) &#8211; Contains the cluster data, each item in the list is a
+single cluster. It is also possible for the data to
+be articles, with each item in the list being a
+single article. The program <strong>defaults to clusters</strong></li>
+<li><strong>refresh</strong> (<em>bool</em>) &#8211; Set to true to rebuild all the indexes and save
+them to the disk (this is necessary when loading
+new data). Otherwise, for reasons of speed,
+the indexes will be loaded from the disk</li>
+<li><strong>clusters</strong> (<em>bool</em>) &#8211; Decides whether to pull data from the cluster DB or
+the article DB</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="sim_lib.SimMatrix.addition">
+<code class="descname">addition</code><span class="sig-paren">(</span><em>clusters</em><span class="sig-paren">)</span><a class="headerlink" href="#sim_lib.SimMatrix.addition" title="Permalink to this definition">¶</a></dt>
+<dd><p>DEPRECATED</p>
+<p>Attempts to find similar clusters to a given list of initial
+clusters in a greedy fashion.</p>
+<dl class="docutils">
+<dt>Algorithm</dt>
+<dd><ul class="first last simple">
+<li>Take an initial list of N clusters</li>
+<li>For each of the clusters in the list, generate a list of
+similar clusters</li>
+<li>With N lists of clusters, identify the cluster which is the most
+similar to all N initial clusters by searching for the cluster
+with the highest combined similarity score (summed over the N
+lists)</li>
+<li>If that cluster is not in the initial list, add it to the list
+and repeat, otherwise the algorithm terminates</li>
+</ul>
+</dd>
+</dl>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><strong>cluster_set</strong> &#8211;
+The ids of the clusters in the chain</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">list</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="sim_lib.SimMatrix.dijkstra">
+<code class="descname">dijkstra</code><span class="sig-paren">(</span><em>article_no</em><span class="sig-paren">)</span><a class="headerlink" href="#sim_lib.SimMatrix.dijkstra" title="Permalink to this definition">¶</a></dt>
+<dd><p>DEPRECATED</p>
+<p><strong>This method chains articles together.</strong></p>
+<p>Runs Djikstra&#8217;s algorithm to find a path in the graph with the lowest
+average distance between a starting article and other articles in the
+corpus. When an article is examined, the 25 nearest nodes by
+similarity are added into the queue and explored (using
+<a class="reference internal" href="#sim_lib.SimMatrix.query" title="sim_lib.SimMatrix.query"><code class="xref py py-func docutils literal"><span class="pre">query</span></code></a>). The process ends when there are no new articles
+to explore. It then prints the best chain of articles.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>article_no</strong> (<em>int</em>) &#8211; The article to start dijkstra&#8217;s algorithm from</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="sim_lib.SimMatrix.keyword_query">
+<code class="descname">keyword_query</code><span class="sig-paren">(</span><em>keyword</em>, <em>n_cluster=5</em><span class="sig-paren">)</span><a class="headerlink" href="#sim_lib.SimMatrix.keyword_query" title="Permalink to this definition">¶</a></dt>
+<dd><p>Selects the top N most similar clusters to the keyword provided
+and returns their ids in sorted order.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>keyword</strong> (<em>str</em>) &#8211; The desired keywords for the query, space separated</li>
+<li><strong>n_cluster</strong> (<em>int</em>) &#8211; The number of most similar clusters to return</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>res</strong> &#8211;
+The ids of the top N most similar clusters in sorted
+order</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">list</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="sim_lib.SimMatrix.query">
+<code class="descname">query</code><span class="sig-paren">(</span><em>article_no=0</em><span class="sig-paren">)</span><a class="headerlink" href="#sim_lib.SimMatrix.query" title="Permalink to this definition">¶</a></dt>
+<dd><p>DEPRECATED</p>
+<p>This is a helper method for <a class="reference internal" href="#sim_lib.SimMatrix.dijkstra" title="sim_lib.SimMatrix.dijkstra"><code class="xref py py-func docutils literal"><span class="pre">dijkstra</span></code></a>. It converts the
+contents of the given article into the same LSI space as the data <strong>(
+must be articles)</strong> and finds the top 25 most similar articles by
+cosine similarity. It then returns these articles in res.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>article_no</strong> (<em>int</em>) &#8211; The article which the query is to be performed on</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><strong>res</strong> &#8211;
+The ids of the top 25 most similar articles to
+article_no</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">list</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="snap_cluster_lib.html" class="btn btn-neutral float-right" title="snap_cluster_lib (overlapping community detection)" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="analyse.html" class="btn btn-neutral" title="analyse (article cluster creation)" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2015, Mark.
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'1',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

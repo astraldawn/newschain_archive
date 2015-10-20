@@ -1,0 +1,489 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>analyse (article cluster creation) &mdash; newschain 1 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+    <link rel="top" title="newschain 1 documentation" href="index.html"/>
+        <link rel="next" title="sim_lib (similarity query)" href="sim_lib.html"/>
+        <link rel="prev" title="News chain project documentation" href="index.html"/> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-nav-search">
+        
+
+        
+          <a href="index.html" class="icon icon-home"> newschain
+        
+
+        
+        </a>
+
+        
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+        
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+        
+          
+          
+              <ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="">analyse (article cluster creation)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="sim_lib.html">sim_lib (similarity query)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="snap_cluster_lib.html">snap_cluster_lib (overlapping community detection)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="utils.html">utils (utility library)</a></li>
+</ul>
+
+          
+        
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="index.html">newschain</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="index.html">Docs</a> &raquo;</li>
+      
+    <li>analyse (article cluster creation)</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="_sources/analyse.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document">
+            
+  <div class="section" id="module-analyse">
+<span id="analyse-article-cluster-creation"></span><h1>analyse (article cluster creation)<a class="headerlink" href="#module-analyse" title="Permalink to this headline">¶</a></h1>
+<p>Classes to perform clustering on individual articles.</p>
+<dl class="class">
+<dt id="analyse.BigClamArticle">
+<em class="property">class </em><code class="descclassname">analyse.</code><code class="descname">BigClamArticle</code><span class="sig-paren">(</span><em>data</em>, <em>coms</em><span class="sig-paren">)</span><a class="headerlink" href="#analyse.BigClamArticle" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#analyse.BisectingKmeans" title="analyse.BisectingKmeans"><code class="xref py py-class docutils literal"><span class="pre">analyse.BisectingKmeans</span></code></a></p>
+<p>Performs clustering using overlapping community detection</p>
+<dl class="method">
+<dt id="analyse.BigClamArticle.__init__">
+<code class="descname">__init__</code><span class="sig-paren">(</span><em>data</em>, <em>coms</em><span class="sig-paren">)</span><a class="headerlink" href="#analyse.BigClamArticle.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Refer to superclass for details</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>data</strong> (<em>list</em>) &#8211; Refer to superclass</li>
+<li><strong>coms</strong> (<em>int</em>) &#8211; Number of communities to find</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="analyse.BigClamArticle.compute">
+<code class="descname">compute</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#analyse.BigClamArticle.compute" title="Permalink to this definition">¶</a></dt>
+<dd><p>Prepares data for community detection algorithm, the detected
+communities are then saved to bigclam_cluster. Each detected
+community represents a single cluster and is stored as a
+ComputedCluster.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="analyse.BisectingKmeans">
+<em class="property">class </em><code class="descclassname">analyse.</code><code class="descname">BisectingKmeans</code><span class="sig-paren">(</span><em>data</em><span class="sig-paren">)</span><a class="headerlink" href="#analyse.BisectingKmeans" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<p>Performs clustering using Bisecting Kmeans.</p>
+<dl class="docutils">
+<dt>Algorithm</dt>
+<dd><ul class="first last simple">
+<li>Begin with all items in a single cluster</li>
+<li>Use normal kmeans to split the cluster into 2 clusters</li>
+<li>Repeat the previous step until some termination condition is reached.
+For this project, we terminate when there is no cluster which
+contains more than 5 items.</li>
+</ul>
+</dd>
+</dl>
+<dl class="method">
+<dt id="analyse.BisectingKmeans.__init__">
+<code class="descname">__init__</code><span class="sig-paren">(</span><em>data</em><span class="sig-paren">)</span><a class="headerlink" href="#analyse.BisectingKmeans.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Initialises the object, key parameter to modify is
+max_cluster_size, to determine when the algorithm terminates. We
+insert the full data into the queue initially, and it functions as
+the first cluster.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>data</strong> (<em>list</em>) &#8211; list of articles, 1 article per row</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="analyse.BisectingKmeans.compute">
+<code class="descname">compute</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#analyse.BisectingKmeans.compute" title="Permalink to this definition">¶</a></dt>
+<dd><p>Performs Bisecting Kmeans on the given data.</p>
+<p>Parameters for Kmeans are as follows (detailed explanation at scikit
+learn website)</p>
+<ul class="simple">
+<li>n_clusters: 2 (split into 2)</li>
+<li>max_iter: 500</li>
+<li>n_init: 50</li>
+</ul>
+</dd></dl>
+
+<dl class="method">
+<dt id="analyse.BisectingKmeans.find_computed_cluster_metrics">
+<code class="descname">find_computed_cluster_metrics</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#analyse.BisectingKmeans.find_computed_cluster_metrics" title="Permalink to this definition">¶</a></dt>
+<dd><p>Initialises cluster metric computation over every cluster that is
+found by the given clustering algorithm.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="analyse.ComputedCluster">
+<em class="property">class </em><code class="descclassname">analyse.</code><code class="descname">ComputedCluster</code><span class="sig-paren">(</span><em>data</em><span class="sig-paren">)</span><a class="headerlink" href="#analyse.ComputedCluster" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<p>Stores a computed cluster and its associated date in an easy format for
+subsequent processing.</p>
+<dl class="method">
+<dt id="analyse.ComputedCluster.__init__">
+<code class="descname">__init__</code><span class="sig-paren">(</span><em>data</em><span class="sig-paren">)</span><a class="headerlink" href="#analyse.ComputedCluster.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Breaks down raw data into different fields for subsequent
+processing into SQL DB. Also initialises metrics for the cluster.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>data</strong> (<em>list</em>) &#8211; Articles in raw format that are included in the cluster</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="analyse.ComputedCluster.compute_metrics">
+<code class="descname">compute_metrics</code><span class="sig-paren">(</span><em>corpus</em>, <em>article_pos</em><span class="sig-paren">)</span><a class="headerlink" href="#analyse.ComputedCluster.compute_metrics" title="Permalink to this definition">¶</a></dt>
+<dd><p>Computes metrics for the given cluster. Metrics computed are:
+diameter, radius, centroid, closest article to centroid, the distance
+of the closest article to the centroid.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>corpus</strong> &#8211; A corpus in LSI space</li>
+<li><strong>article_pos</strong> (<em>dict</em>) &#8211; Maps the article id to the actual
+positions of the article in the corpus</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="analyse.ComputedCluster.display">
+<code class="descname">display</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#analyse.ComputedCluster.display" title="Permalink to this definition">¶</a></dt>
+<dd><p>Helper function to display the contents of a computed cluster</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="analyse.ExtractFeatures">
+<em class="property">class </em><code class="descclassname">analyse.</code><code class="descname">ExtractFeatures</code><a class="headerlink" href="#analyse.ExtractFeatures" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<p>Extracts features from data extracted from SQL DB in a specific format.</p>
+<dl class="docutils">
+<dt>DB Format</dt>
+<dd><ul class="first last simple">
+<li>name text</li>
+<li>section text</li>
+<li>date datetime</li>
+<li>wordcnt int</li>
+<li>summary text</li>
+<li>id int</li>
+</ul>
+</dd>
+<dt>Usage</dt>
+<dd><ul class="first last simple">
+<li>load_data() with the desired data in appropriate format</li>
+<li>pre_processing()</li>
+<li>transform_tfidf()</li>
+<li>model_lsi()</li>
+</ul>
+</dd>
+</dl>
+<dl class="method">
+<dt id="analyse.ExtractFeatures.__init__">
+<code class="descname">__init__</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#analyse.ExtractFeatures.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Declares variables for later use</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="analyse.ExtractFeatures.load_data">
+<code class="descname">load_data</code><span class="sig-paren">(</span><em>data</em><span class="sig-paren">)</span><a class="headerlink" href="#analyse.ExtractFeatures.load_data" title="Permalink to this definition">¶</a></dt>
+<dd><p>Loads data in the format specified above.</p>
+<p>Loaded data located in self.data.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="analyse.ExtractFeatures.model_lsi">
+<code class="descname">model_lsi</code><span class="sig-paren">(</span><em>n_topics=200</em><span class="sig-paren">)</span><a class="headerlink" href="#analyse.ExtractFeatures.model_lsi" title="Permalink to this definition">¶</a></dt>
+<dd><p>Performs dimensionality reduction on the LogEntropy weighted
+corpus using latent semantic indexing (LSI). The corpus,
+now converted into LSI space, is located in self.corpus_lsi.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>n_topics</strong> (<em>int</em>) &#8211; the number of topics in the LSI space</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="analyse.ExtractFeatures.parsing">
+<code class="descname">parsing</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#analyse.ExtractFeatures.parsing" title="Permalink to this definition">¶</a></dt>
+<dd><p>Performs standard text processing on the contents of self.documents.</p>
+<dl class="docutils">
+<dt>Steps:</dt>
+<dd><ul class="first last simple">
+<li>Removal of html tags, punctuation, multiple whitespaces,
+numbers and stopwords</li>
+<li>Addition of bigrams and trigrams to the dictionary (
+self.dictionary)</li>
+<li>Conversion into a bag of words corpus (self.corpus)</li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="analyse.ExtractFeatures.pre_processing">
+<code class="descname">pre_processing</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#analyse.ExtractFeatures.pre_processing" title="Permalink to this definition">¶</a></dt>
+<dd><p>Combines the titles with the summaries of the articles for further
+processing. Combined articles and summaries located in self.documents.</p>
+<p>Calling this function will result in a call to the parsing function.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="analyse.ExtractFeatures.pre_processing_line">
+<code class="descname">pre_processing_line</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#analyse.ExtractFeatures.pre_processing_line" title="Permalink to this definition">¶</a></dt>
+<dd><p>Helper function for feature extraction in snap_cluster_lib.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="analyse.ExtractFeatures.print_data">
+<code class="descname">print_data</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#analyse.ExtractFeatures.print_data" title="Permalink to this definition">¶</a></dt>
+<dd><p>Helper function that prints the contents of self.data</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="analyse.ExtractFeatures.transform_corpus">
+<code class="descname">transform_corpus</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#analyse.ExtractFeatures.transform_corpus" title="Permalink to this definition">¶</a></dt>
+<dd><p>Transforms bag of words corpus into a LogEntropy weighted corpus,
+reducing the weight of unimportant terms. The transformed corpus is
+located in self.corpus_transformed.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="analyse.ExtractFeatures.word_freq">
+<code class="descname">word_freq</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#analyse.ExtractFeatures.word_freq" title="Permalink to this definition">¶</a></dt>
+<dd><p>DEPRECATED</p>
+<p>Extracts the 75 most common words in the data and adds them to the
+stopword list.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">A modified stop word list</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">list</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="analyse.QueueCluster">
+<em class="property">class </em><code class="descclassname">analyse.</code><code class="descname">QueueCluster</code><span class="sig-paren">(</span><em>data</em><span class="sig-paren">)</span><a class="headerlink" href="#analyse.QueueCluster" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<p>Object to store a cluster while it is in the queue. This supports the
+bisecting kmeans clustering. In that algorithm, a cluster in the queue
+can either be processed further (broken down into 2 smaller clusters) or
+stored.</p>
+<dl class="method">
+<dt id="analyse.QueueCluster.__init__">
+<code class="descname">__init__</code><span class="sig-paren">(</span><em>data</em><span class="sig-paren">)</span><a class="headerlink" href="#analyse.QueueCluster.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Performs feature extraction / dimensionality reduction on the raw
+article data that makes up this cluster for further processing later.
+The data is converted into LSI space which is necessary for Kmeans
+clustering.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>data</strong> (<em>list</em>) &#8211; Articles in raw format</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="analyse.get_stop_list">
+<code class="descclassname">analyse.</code><code class="descname">get_stop_list</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#analyse.get_stop_list" title="Permalink to this definition">¶</a></dt>
+<dd><p>DEPRECATED</p>
+<p>Stopword list generator</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">list of stopwords</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">list</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+
+
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="sim_lib.html" class="btn btn-neutral float-right" title="sim_lib (similarity query)" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="index.html" class="btn btn-neutral" title="News chain project documentation" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2015, Mark.
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'1',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

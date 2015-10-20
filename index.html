@@ -1,0 +1,288 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>News chain project documentation &mdash; newschain 1 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+    <link rel="top" title="newschain 1 documentation" href="#"/>
+        <link rel="next" title="analyse (article cluster creation)" href="analyse.html"/> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-nav-search">
+        
+
+        
+          <a href="#" class="icon icon-home"> newschain
+        
+
+        
+        </a>
+
+        
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+        
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+        
+          
+          
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="analyse.html">analyse (article cluster creation)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="sim_lib.html">sim_lib (similarity query)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="snap_cluster_lib.html">snap_cluster_lib (overlapping community detection)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="utils.html">utils (utility library)</a></li>
+</ul>
+
+          
+        
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="#">newschain</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="#">Docs</a> &raquo;</li>
+      
+    <li>News chain project documentation</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="_sources/index.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document">
+            
+  <div class="section" id="news-chain-project-documentation">
+<h1>News chain project documentation<a class="headerlink" href="#news-chain-project-documentation" title="Permalink to this headline">¶</a></h1>
+<p>Please read the following information before proceeding</p>
+</div>
+<div class="section" id="contents">
+<span id="id1"></span><h1>Contents<a class="headerlink" href="#contents" title="Permalink to this headline">¶</a></h1>
+<blockquote>
+<div><ul class="simple">
+<li><a class="reference internal" href="#intro"><span>Introduction</span></a></li>
+<li><a class="reference internal" href="#clean-data"><span>Cleaning of data</span></a></li>
+<li><a class="reference internal" href="#create-cluster"><span>Creating article clusters</span></a></li>
+<li><a class="reference internal" href="#create-chain"><span>Cluster chaining</span></a></li>
+<li><a class="reference internal" href="#indexes"><span>Indices and tables</span></a></li>
+</ul>
+</div></blockquote>
+</div>
+<div class="section" id="introduction">
+<span id="intro"></span><h1>Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h1>
+<dl class="docutils">
+<dt>Requirements</dt>
+<dd><ul class="first last simple">
+<li>Language: Python 2.7.6</li>
+<li>Additional libraries: gensim, numpy, scikit-learn, snap-py, sqlite3</li>
+</ul>
+</dd>
+<dt>Structure of the project</dt>
+<dd><ul class="first last simple">
+<li>/data: Contains all of the data files used by the program, the raw .csv files and the SQL databases</li>
+<li>/docs: Contains all the documentation for the project</li>
+<li>/src: Contains source files as well as other folders that hold save indexes and dictionaries</li>
+</ul>
+</dd>
+</dl>
+<p><strong>The programs in this project were written for use with a specific data format. It is possible to run this project with different sets of data. However, this would involve rewriting functions that deal with the saving / loading of the raw data.</strong></p>
+<p>Module information</p>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="analyse.html">analyse (article cluster creation)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="sim_lib.html">sim_lib (similarity query)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="snap_cluster_lib.html">snap_cluster_lib (overlapping community detection)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="utils.html">utils (utility library)</a></li>
+</ul>
+</div>
+<p>Return to <a class="reference internal" href="#contents"><span>top</span></a></p>
+</div>
+<div class="section" id="cleaning-of-data">
+<span id="clean-data"></span><h1>Cleaning of data<a class="headerlink" href="#cleaning-of-data" title="Permalink to this headline">¶</a></h1>
+<ol class="arabic">
+<li><p class="first">Crawl raw data from the Internet and save it in the following format (.csv)</p>
+</li>
+<li><dl class="first docutils">
+<dt>Raw article format</dt>
+<dd><ul class="first last simple">
+<li>Title (str): Title of the article</li>
+<li>Section (str): Section in which the article was published</li>
+<li>Region (str): Region which the events described in the article occured in</li>
+<li>Time (datetime): Time of publication of the article</li>
+<li>Word count (int): Number of words in the article</li>
+<li>Summary (str): A short summary of the article</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><p class="first">The program minimally requires title, section, time and summary. The region and word count fields can be filled
+with &#8221; &#8221; and 0 respectively.</p>
+</li>
+<li><p class="first">The details of how the program builds the database can be found in <a class="reference internal" href="utils.html#utils.FileList.sqlite_build_nyt_full" title="utils.FileList.sqlite_build_nyt_full"><code class="xref py py-func docutils literal"><span class="pre">utils.FileList.sqlite_build_nyt_full()</span></code></a></p>
+</li>
+<li><p class="first">The database is then stored in <strong>../data/NewYT_all.db</strong>. This can be modified by changing the con variable in <a class="reference internal" href="utils.html#utils.FileList.sqlite_build_nyt_full" title="utils.FileList.sqlite_build_nyt_full"><code class="xref py py-func docutils literal"><span class="pre">utils.FileList.sqlite_build_nyt_full()</span></code></a></p>
+</li>
+</ol>
+<p><strong>Example program</strong>: ../src/data_clean.py</p>
+<p>Return to <a class="reference internal" href="#contents"><span>top</span></a></p>
+</div>
+<div class="section" id="creating-article-clusters">
+<span id="create-cluster"></span><h1>Creating article clusters<a class="headerlink" href="#creating-article-clusters" title="Permalink to this headline">¶</a></h1>
+<p>From this point onwards, we will discuss how to run the programs in the context of finding relevant information about events that occured in the South China Sea.</p>
+<ol class="arabic simple">
+<li>Load the cleaned data from <strong>../data/NewYT_all.db</strong> using <a class="reference internal" href="utils.html#utils.load_nyt" title="utils.load_nyt"><code class="xref py py-func docutils literal"><span class="pre">utils.load_nyt()</span></code></a>. We load all the data in the range, from 8 Apr 2013 to 5 July 2015. We set the keyword field to &#8220;China&#8221;, while this restricts the search space significantly, it still allows for some breadth in the discussion.</li>
+<li>Set the step size to 400. This can be adjusted to increase or decrease the number of clusters generated per step.</li>
+<li>Cluster the data for each step using one of the provided clustering method, either <a class="reference internal" href="analyse.html#analyse.BisectingKmeans" title="analyse.BisectingKmeans"><code class="xref py py-class docutils literal"><span class="pre">bisecting</span> <span class="pre">kmeans</span></code></a> or <a class="reference internal" href="analyse.html#analyse.BigClamArticle" title="analyse.BigClamArticle"><code class="xref py py-class docutils literal"><span class="pre">overlapping</span> <span class="pre">community</span> <span class="pre">detection</span></code></a>. Assuming we use the former, we then call <a class="reference internal" href="analyse.html#analyse.BisectingKmeans.compute" title="analyse.BisectingKmeans.compute"><code class="xref py py-func docutils literal"><span class="pre">compute</span></code></a>. This function performs clustering and has parameters set to ensure that the cluster size is not too large. The details of this can be found in the documentation for <a class="reference internal" href="analyse.html"><em>analyse</em></a>.</li>
+<li>After the clusters have been computed, call <a class="reference internal" href="analyse.html#analyse.BisectingKmeans.find_computed_cluster_metrics" title="analyse.BisectingKmeans.find_computed_cluster_metrics"><code class="xref py py-func docutils literal"><span class="pre">find_computed_cluster_metrics</span></code></a> to compute metrics for each cluster. The metrics that are computed include: radius, diameter and the closest article to the centroid of the cluster.</li>
+</ol>
+<p><strong>Example program</strong>: ../src/top_articles_new.py</p>
+<p>Return to <a class="reference internal" href="#contents"><span>top</span></a></p>
+</div>
+<div class="section" id="cluster-chaining">
+<span id="create-chain"></span><h1>Cluster chaining<a class="headerlink" href="#cluster-chaining" title="Permalink to this headline">¶</a></h1>
+<ol class="arabic simple">
+<li>Load all the cluster data from <strong>../data/NewYT_clustered_china_bisect_final.db</strong> into the variable data using <a class="reference internal" href="utils.html#utils.load_nyt_clusters" title="utils.load_nyt_clusters"><code class="xref py py-func docutils literal"><span class="pre">utils.load_nyt_clusters()</span></code></a>. As we are using the clusters generated in the previous step, all the clusters will contain articles with content pertaining to China.</li>
+<li>Prepare the data for similarity query by initialising a new <a class="reference internal" href="sim_lib.html#sim_lib.SimMatrix" title="sim_lib.SimMatrix"><code class="xref py py-class docutils literal"><span class="pre">SimMatrix</span></code></a> object and loading the data into it. It is important that for the initial run, <strong>refresh = True</strong>. The indexes are saved in ../src/tmp. <strong>To load cluster data, the folder must be renamed to tmp_clusters.</strong></li>
+<li>Perform a similarity query using <a class="reference internal" href="sim_lib.html#sim_lib.SimMatrix.keyword_query" title="sim_lib.SimMatrix.keyword_query"><code class="xref py py-func docutils literal"><span class="pre">keyword_query</span></code></a>. The keywords that we use for the query are &#8220;south china sea&#8221; and we also set the number of similar clusters to be returned to be 30 (n_cluster = 30). The results are stored in cluster_id.</li>
+<li>From cluster_id, we then extract the data for each of the clusters and load it into a new <a class="reference internal" href="snap_cluster_lib.html#snap_cluster_lib.BigClamChainCluster" title="snap_cluster_lib.BigClamChainCluster"><code class="xref py py-class docutils literal"><span class="pre">BigClamChainCluster</span></code></a>.</li>
+<li>Overlapping community detection is then performed by calling <a class="reference internal" href="snap_cluster_lib.html#snap_cluster_lib.BigClamCluster.find_community" title="snap_cluster_lib.BigClamCluster.find_community"><code class="xref py py-func docutils literal"><span class="pre">find_community</span></code></a>. It is possible to set the number of desired communities by adjusting the opt_com variable.</li>
+<li>The chains found via overlapping community detection can then be viewed by calling <a class="reference internal" href="snap_cluster_lib.html#snap_cluster_lib.BigClamChainCluster.print_community" title="snap_cluster_lib.BigClamChainCluster.print_community"><code class="xref py py-func docutils literal"><span class="pre">print_community</span></code></a>.</li>
+</ol>
+<p><strong>Example program</strong>: ../src/chain.py</p>
+<p>Return to <a class="reference internal" href="#contents"><span>top</span></a></p>
+</div>
+<div class="section" id="indices-and-tables">
+<span id="indexes"></span><h1>Indices and tables<a class="headerlink" href="#indices-and-tables" title="Permalink to this headline">¶</a></h1>
+<ul class="simple">
+<li><a class="reference internal" href="genindex.html"><span>Index</span></a></li>
+<li><a class="reference internal" href="py-modindex.html"><span>Module Index</span></a></li>
+<li><a class="reference internal" href="search.html"><span>Search Page</span></a></li>
+</ul>
+<p>Return to <a class="reference internal" href="#contents"><span>top</span></a></p>
+</div>
+
+
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="analyse.html" class="btn btn-neutral float-right" title="analyse (article cluster creation)" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2015, Mark.
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'1',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

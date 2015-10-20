@@ -1,0 +1,359 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>snap_cluster_lib (overlapping community detection) &mdash; newschain 1 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+    <link rel="top" title="newschain 1 documentation" href="index.html"/>
+        <link rel="next" title="utils (utility library)" href="utils.html"/>
+        <link rel="prev" title="sim_lib (similarity query)" href="sim_lib.html"/> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-nav-search">
+        
+
+        
+          <a href="index.html" class="icon icon-home"> newschain
+        
+
+        
+        </a>
+
+        
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+        
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+        
+          
+          
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="analyse.html">analyse (article cluster creation)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="sim_lib.html">sim_lib (similarity query)</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="">snap_cluster_lib (overlapping community detection)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="utils.html">utils (utility library)</a></li>
+</ul>
+
+          
+        
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="index.html">newschain</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="index.html">Docs</a> &raquo;</li>
+      
+    <li>snap_cluster_lib (overlapping community detection)</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="_sources/snap_cluster_lib.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document">
+            
+  <div class="section" id="module-snap_cluster_lib">
+<span id="snap-cluster-lib-overlapping-community-detection"></span><h1>snap_cluster_lib (overlapping community detection)<a class="headerlink" href="#module-snap_cluster_lib" title="Permalink to this headline">¶</a></h1>
+<p>Class to perform overlapping community detection using bigclam.</p>
+<dl class="class">
+<dt id="snap_cluster_lib.BigClamArticleCluster">
+<em class="property">class </em><code class="descclassname">snap_cluster_lib.</code><code class="descname">BigClamArticleCluster</code><span class="sig-paren">(</span><em>data</em>, <em>coms=40</em><span class="sig-paren">)</span><a class="headerlink" href="#snap_cluster_lib.BigClamArticleCluster" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#snap_cluster_lib.BigClamLineCluster" title="snap_cluster_lib.BigClamLineCluster"><code class="xref py py-class docutils literal"><span class="pre">snap_cluster_lib.BigClamLineCluster</span></code></a></p>
+<dl class="method">
+<dt id="snap_cluster_lib.BigClamArticleCluster.__init__">
+<code class="descname">__init__</code><span class="sig-paren">(</span><em>data</em>, <em>coms=40</em><span class="sig-paren">)</span><a class="headerlink" href="#snap_cluster_lib.BigClamArticleCluster.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Modified BigClamLineCluster which is used to cluster articles
+together.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>data</strong> (<em>list</em>) &#8211; A list where each item is a single article</li>
+<li><strong>coms</strong> (<em>int</em>) &#8211; The number of communities to be found using
+overlapping community detection</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="snap_cluster_lib.BigClamArticleCluster.print_community">
+<code class="descname">print_community</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#snap_cluster_lib.BigClamArticleCluster.print_community" title="Permalink to this definition">¶</a></dt>
+<dd><p>Prints all the communities produced by overlapping community
+detection.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="snap_cluster_lib.BigClamChainCluster">
+<em class="property">class </em><code class="descclassname">snap_cluster_lib.</code><code class="descname">BigClamChainCluster</code><span class="sig-paren">(</span><em>data</em><span class="sig-paren">)</span><a class="headerlink" href="#snap_cluster_lib.BigClamChainCluster" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#snap_cluster_lib.BigClamLineCluster" title="snap_cluster_lib.BigClamLineCluster"><code class="xref py py-class docutils literal"><span class="pre">snap_cluster_lib.BigClamLineCluster</span></code></a></p>
+<dl class="method">
+<dt id="snap_cluster_lib.BigClamChainCluster.__init__">
+<code class="descname">__init__</code><span class="sig-paren">(</span><em>data</em><span class="sig-paren">)</span><a class="headerlink" href="#snap_cluster_lib.BigClamChainCluster.__init__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="snap_cluster_lib.BigClamChainCluster.load">
+<code class="descname">load</code><span class="sig-paren">(</span><em>data</em><span class="sig-paren">)</span><a class="headerlink" href="#snap_cluster_lib.BigClamChainCluster.load" title="Permalink to this definition">¶</a></dt>
+<dd><p>Loads the data into the object for later use. It performs feature
+extraction to build the dictionary and transforms the corpus into
+log-entropy vectors. This is so that we can find the top 50 words for
+each cluster.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>data</strong> (<em>list</em>) &#8211; A list of clusters, where each item is a cluster</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="snap_cluster_lib.BigClamChainCluster.print_cluster">
+<code class="descname">print_cluster</code><span class="sig-paren">(</span><em>cluster_id_list</em><span class="sig-paren">)</span><a class="headerlink" href="#snap_cluster_lib.BigClamChainCluster.print_cluster" title="Permalink to this definition">¶</a></dt>
+<dd><p>Prints the clusters in the given cluster list and performs
+coherence calculation.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>cluster_id_list</strong> (<em>list</em>) &#8211; A list of clusters that make up a
+coherent chain.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="snap_cluster_lib.BigClamChainCluster.print_community">
+<code class="descname">print_community</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#snap_cluster_lib.BigClamChainCluster.print_community" title="Permalink to this definition">¶</a></dt>
+<dd><p>Prints all the communities produced by overlapping community
+detection.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="snap_cluster_lib.BigClamCluster">
+<em class="property">class </em><code class="descclassname">snap_cluster_lib.</code><code class="descname">BigClamCluster</code><a class="headerlink" href="#snap_cluster_lib.BigClamCluster" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<dl class="method">
+<dt id="snap_cluster_lib.BigClamCluster.__init__">
+<code class="descname">__init__</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#snap_cluster_lib.BigClamCluster.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Initialise the BigClamCluster object. Creates objects for feature
+extraction and the bipartite graph.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="snap_cluster_lib.BigClamCluster.create_graph">
+<code class="descname">create_graph</code><span class="sig-paren">(</span><em>cutoff=0.1</em><span class="sig-paren">)</span><a class="headerlink" href="#snap_cluster_lib.BigClamCluster.create_graph" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates the bipartite graph necessary for overlapping community
+detection. It assumes that the necessary edges between the words and
+the clusters have already been generated.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="snap_cluster_lib.BigClamCluster.find_community">
+<code class="descname">find_community</code><span class="sig-paren">(</span><em>num_threads=4</em>, <em>min_com=10</em>, <em>max_com=100</em>, <em>div_com=5</em>, <em>step_alpha=0.3</em>, <em>step_beta=0.3</em>, <em>opt_com=-1</em>, <em>threshold=0.001</em><span class="sig-paren">)</span><a class="headerlink" href="#snap_cluster_lib.BigClamCluster.find_community" title="Permalink to this definition">¶</a></dt>
+<dd><p>Finds communities using bigclam. Each of these communities will
+represent a chain of articles. The communities are stored in
+self.EstCmtyVV.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>num_threads</strong> &#8211; number of threads (parallel)</li>
+<li><strong>min_com</strong> &#8211; minimum number of communities</li>
+<li><strong>max_com</strong> &#8211; maximum number of communities</li>
+<li><strong>div_com</strong> &#8211; how many trials for number of communities</li>
+<li><strong>step_alpha</strong> &#8211; alpha for backtracking line search</li>
+<li><strong>step_beta</strong> &#8211; beta for backtracking line search</li>
+<li><strong>opt_com</strong> &#8211; number of communities to detect</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="snap_cluster_lib.BigClamLineCluster">
+<em class="property">class </em><code class="descclassname">snap_cluster_lib.</code><code class="descname">BigClamLineCluster</code><span class="sig-paren">(</span><em>data</em><span class="sig-paren">)</span><a class="headerlink" href="#snap_cluster_lib.BigClamLineCluster" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#snap_cluster_lib.BigClamCluster" title="snap_cluster_lib.BigClamCluster"><code class="xref py py-class docutils literal"><span class="pre">snap_cluster_lib.BigClamCluster</span></code></a></p>
+<dl class="method">
+<dt id="snap_cluster_lib.BigClamLineCluster.__init__">
+<code class="descname">__init__</code><span class="sig-paren">(</span><em>data</em><span class="sig-paren">)</span><a class="headerlink" href="#snap_cluster_lib.BigClamLineCluster.__init__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="snap_cluster_lib.BigClamLineCluster.create_edges">
+<code class="descname">create_edges</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#snap_cluster_lib.BigClamLineCluster.create_edges" title="Permalink to this definition">¶</a></dt>
+<dd><p>Builds the edges of the bipartite graph using the top 50 tf-idf words
+from each cluster. Once the edges are built, the graph can be created.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="snap_cluster_lib.BigClamLineCluster.load">
+<code class="descname">load</code><span class="sig-paren">(</span><em>data</em><span class="sig-paren">)</span><a class="headerlink" href="#snap_cluster_lib.BigClamLineCluster.load" title="Permalink to this definition">¶</a></dt>
+<dd><p>Loads the data into the object for later use. It performs feature
+extraction to build the dictionary and transforms the corpus into
+log-entropy vectors. This is so that we can find the top 50 words for
+each cluster.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>data</strong> (<em>list</em>) &#8211; A list of clusters, where each item is a cluster</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="snap_cluster_lib.BigClamLineCluster.print_community">
+<code class="descname">print_community</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#snap_cluster_lib.BigClamLineCluster.print_community" title="Permalink to this definition">¶</a></dt>
+<dd><p>Prints all the communities produced by overlapping community
+detection.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="utils.html" class="btn btn-neutral float-right" title="utils (utility library)" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="sim_lib.html" class="btn btn-neutral" title="sim_lib (similarity query)" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2015, Mark.
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'1',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>
