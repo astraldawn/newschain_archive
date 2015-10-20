@@ -1,132 +1,259 @@
 \documentclass[12pt]{article}
 \usepackage{enumitem}
 \usepackage[margin=1.2in]{geometry}
+\usepackage{tikz,amsmath,pgf,varwidth,color,float,multirow}
+\usetikzlibrary{arrows,automata,positioning,chains,fit,shapes,calc}
+
 \begin{document}
 
-\title{Progress report}
-\author{Lee Chu Yong Mark}
+\title{Final report}
+\author{Lee Chu Yong Mark, Sit Wing Yee}
 \maketitle
 
-\begin{abstract}
-Placeholder
-\end{abstract}
-
 \section{Introduction}
-In recent years, vast amounts of information have become available on the Internet. When an event occurs, information about this event is generated from numerous sources. However, events do not occur in isolation. More often than not, a single event can be connected to other related events in the past, present and future (unless of course, the said event is very recent). It may be difficult for human analysts to spot these connections between events.
+In recent years, vast amounts of information have become available on the Internet. When an event occurs, information about this event is generated from numerous sources. However, events do not occur in isolation. More often than not, a single event can be connected to other related events in the past, present and future (unless of course, the said event is very recent). To a human analyst, it would be useful to be able to spot connections between events, which would allow them to gain additional insight to a single event or a greater understanding of a larger set of related issues.
 
-TBC - placehold
+In light of this, our objective is to develop a system that facilitates the discovery of relevant knowledge from a large number of news articles based on an initial topic of interest. This will be achieved through two goals:
+
+\begin{enumerate}[noitemsep]
+\item Identify articles that report on the same topic
+\item Chain connected topics that explain the development of a series of events
+\end{enumerate}
+
+The aim of the first goal is to aid users in sifting through a large amount of information. This is accomplished through article clustering (section \ref{articlecluster}). The aim of the second goal is to facilitate the discovery of relevant knowledge by chaining the article clusters from the previous goal together using overlapping community detection (section \ref{chainclusters}).
+
+The report is structured as follows:
+\begin{itemize}[noitemsep]
+\item Section 2 - Summary of clustering methods and algorithms
+\item Section 3 - Implementation details
+\item Section 4 - Evaluation metrics and usage example
+\item Section 5 - Future work
+\item Section 6 - Related information
+\end{itemize}
 
 \section{Background}
 Many authors have worked on the discovery of knowledge from news articles. We draw on work from two key areas, clustering for topic detection as well as overlapping community detection for creating chains of news articles.
 
 \subsection{Clustering}
-Clustering is the process of examining a collection of points and grouping these points into cluster according to a distance measure \cite{mining2012}. We elaborate on two clustering algorithms, hierarchical agglomerative clustering and KMeans. Both these algorithms assume an Euclidean space. Every cluster has a \textit{centroid}, the average of all its points. The \textit{radius} of a cluster is the maximum distance between all points and the centroid. The \textit{diameter} of a cluster is the maximum distance between any two points in the cluster.
+Clustering is the process of examining a collection of points and grouping these points into cluster according to a distance measure \cite{mining2012}. We elaborate on two clustering algorithms, hierarchical agglomerative clustering and KMeans. Both these algorithms assume an Euclidean space. Every cluster has a \textit{centroid}, the average of all its points. The \textit{radius} of a cluster is the maximum distance between any point and the centroid. The \textit{diameter} of a cluster is the maximum distance between any two points in the cluster.
 
 \subsubsection{Agglomerative clustering}
-In agglomerative clustering, each point starts as its own cluster. Clusters that are close to each other, based on a distance measure, are combined to form a larger cluster. This process of combining clusters continues until certain conditions are met (e.g. \textit{k} clusters are desired and have been found) or it becomes undesirable to combine two clusters together (e.g. the diameter of the best possible merge exceeds a threshold). Agglomerative clustering suffers from a running time of $O(n^2 log n)$, making it unfeasible when \textit{n} is large. This stems from having to compute the distance between each pair of clusters to find the best merge.
+In agglomerative clustering, each point starts as its own cluster. Clusters that are close to each other, based on a distance measure, are combined to form a larger cluster. This process of combining clusters continues until certain conditions are met (e.g. \textit{k} clusters are desired and have been found) or it becomes undesirable to combine two clusters together (e.g. the diameter of the best possible merge exceeds a threshold). Agglomerative clustering suffers from a running time of $O(n^2 log n)$, making it infeasible when \textit{n} is large. This stems from having to compute the distance between each pair of clusters to find the best merge.
 
 \subsubsection{KMeans}
 Unlike agglomerative clustering, which merges clusters together, KMeans is a point clustering algorithm. It assumes that there are \textit{k} clusters. To select these initial \textit{k} clusters, \textit{k} points are chosen from the data and set as the centroids of their clusters. These points are chosen in such a way that they are unlikely to be in the same cluster. For each of the remaining points, the centroid nearest to the point is found, the point is added to the cluster of that centroid and the centroid is adjusted to account for the addition of the point. KMeans runs in linear time with respect to the number of items.
 
-\subsubsection{Bisecting KMeans}
-Comparions of clustering approaches have found that while agglomerative clustering tends to produce superior clusters, KMeans is far more efficient \cite{ctechniquecomp}. It is possible to combine the best of both these approaches and produce clusters which are as good or better than clusters produced by agglomerative clustering methods. The algorithm is discussed in \cite{ctechniquecomp} but not utilised due to limited time.
+\subsubsection{Bisecting KMeans} \label{bkmeans}
+Comparisons of clustering approaches have found that while agglomerative clustering tends to produce superior clusters, KMeans is far more efficient \cite{ctechniquecomp}. It is possible to combine the best of both these approaches and produce clusters which are as good or better than clusters produced by agglomerative clustering methods. The algorithm is discussed in detail in \cite{ctechniquecomp}.
 
 \subsubsection{Clustering and topic detection}
-Clustering is used to detect topics. Columbia's Newsblaster \cite{newsblaster}, a news tracker and summariser, utilises agglomerative clustering with a groupwise average similarity function to group articles that belong to the same story together. In \cite{tdttanalysis}, an incremental clustering algorithm is proposed for topic detection.
+Clustering is used to detect topics. Columbia's Newsblaster \cite{newsblaster}, a news tracker and summariser, utilises agglomerative clustering with a group-wise average similarity function to group articles that belong to the same story together. In \cite{tdttanalysis}, an incremental clustering algorithm is proposed for topic detection.
 
 
-\subsection{Article chaining} \label{chainalgo}
+\subsection{Chaining algorithm} \label{chainalgo}
 After generating clusters of articles, we need to link the clusters together to form a chain. We adopt the algorithm found in \cite{infocartography}, which draws on the work in overlapping community detection from \cite{overlapcom}. This algorithm captures the property of \textit{coherence} effectively.
 
 \textit{Coherence} is the idea that every item in a chain should share some characteristics. When the items are article clusters, all the clusters should share a common set of words. While it is simpler to measure the similarity between consecutive clusters in a chain, it can give rise to chains that are incoherent. In an incoherent chain, all consecutive clusters are similar (e.g. clusters 1 and 2 are similar, clusters 2 and 3 are similar). However, clusters 1 and 3 may be very different from each other, to the point of not having any content in common. To apply the concept of coherence to the article clusters, we want to find groups of words that belong to the same clusters and clusters that use similar words \cite{infocartography}.
 
-A weighted bipartite graph is constructed, with the clusters as one set of nodes and individual words as the other. An edge exists between an article cluster and a word if and only if an article in the cluster contains the word. The weight of the edge is the number of times the word occurs in the cluster. By adding weights to the edges, it is possible to ensure strong co-occurence between clusters and words by removing edges with weight that is less than 10\% of the maximum edge weight. 
+A weighted bipartite graph is constructed, with the clusters as one set of nodes and individual words as the other. An edge exists between an article cluster and a word if and only if an article in the cluster contains the word. The weight of the edge is the number of times the word occurs in the cluster. By adding weights to the edges, it is possible to ensure strong co-occurrence between clusters and words by removing edges with weight that is less than 10\% of the maximum edge weight.
+	
+	\begin{figure}[H]
+	\begin{center}
+	\definecolor{mblue}{RGB}{80,80,160}
+	\definecolor{mgreen}{RGB}{80,160,80}
+	\begin{tikzpicture}[thick,
+		fsnode/.style={draw,circle,fill=mblue},
+		ssnode/.style={draw,circle,fill=mgreen}
+	]
+	
+	% Nodes of Words
+	\begin{scope}[start chain=going below, node distance=7mm]
+	\node[fsnode, on chain] (w1) [label=left: china] {};
+	\node[fsnode, on chain] (w2) [label=left: japan] {};
+	\node[fsnode, on chain] (w3) [label=left: hanoi] {};
+	\node[fsnode, on chain] (w4) [label=left: ships] {};
+	\node[fsnode, on chain] (w5) [label=left: pentagon] {};
+	\end{scope}
+	
+	% Nodes of Clusters
+	\begin{scope}[xshift=4cm,yshift=-1cm,start chain=going below,node distance=7mm]
+	\node[ssnode, on chain] (c1) [label=right:Cluster 1] {};
+	\node[ssnode, on chain] (c2) [label=right:Cluster 2] {};
+	\node[ssnode, on chain] (c3) [label=right:Cluster 3] {};
+	\end{scope}
+	
+	% Words
+	\node [fit=(w1) (w2), label={[label distance=3mm]above:\large Words}] {}	;
+	
+	% Clusters
+	\node [fit=(c1) (c3), label={[label distance=3mm]above:\large Clusters}] {};
+	
+	\draw (w1) -- (c1);
+	\draw (w1) -- (c2);
+	\draw (w1) -- (c3);
+	\draw (w2) -- (c1);
+	\draw (w2) -- (c3);
+	\draw (w3) -- (c3);
+	\draw (w4) -- (c1);
+	\draw (w4) -- (c2);
+	\draw (w5) -- (c2);
+	
+	\end{tikzpicture}
+	\end{center}
+	\caption{Sample bipartite graph after edge weights have been discarded}
+	\end{figure}
 
-The weights are then discarded and overlapping commmunites detected using BigClam. BigClam uses a block coordinate gradient ascent approach and is very scalable, with each iteration taking near constant time \cite{overlapcom}.
+The weights are then discarded and overlapping communities detected using BigClam. BigClam uses a block coordinate gradient ascent approach and is very scalable, with each iteration taking near constant time. It is possible for a node to be in multiple overlapping communities. Further details on this algorithm can be found in  \cite{overlapcom}.
 
-
-\section{Algorithm}
-In this section, we provide a broad overview of our algorithm. Our algorithm has two main steps.
+\section{Implementation}
+In this section, we provide a broad overview of our implementation, which has two main steps:
 \begin{enumerate}[noitemsep]
-\item{Group articles into article clusters - Agglomerative Clustering}
+\item{Group articles into article clusters - Bisecting KMeans}
 \item{Chain article clusters together - Overlapping Community Detection}
 \end{enumerate}
-\subsection{Article clustering} \label{articlecluster}
-The initial step involves splitting the articles into time steps of seven days. Articles are vectorised using TF-IDF. TF-IDF aids in the removal of uninformative words by reducing the weight of words that are either rare or occur frequently. 
 
-Latent Semantic Indexing (LSI) is performed. LSI is a method for automated indexing and retrival that takes advantage of implicit higher order structure in the association of terms with documents. LSI was chosen over its successor, Latent Dirichlet Allocation (LDA) as it scales better and has greater noise tolerance.
-
-As we examine many articles at each time step, it is common to find several articles covering the same news story. Articles which cover the same (or very similar) news story are grouped using agglomerative clustering. Agglomerative clustering is favoured over KMeans as it results in smaller clusters that more accurately capture a single story. To further reduce the size of the clusters, clusters with more than 10 articles are split into smaller clusters. This has the added benefit of ensuring consistent cluster size, as certain time steps contain significantly more news articles than others.
-
-\subsection{Chaining articles}
-In section \ref{articlecluster}, we have generated clusters of articles. To form chains of articles, the algorithm described in section \ref{chainalgo} was applied on the clusters. Every overlapping community that is detected may contain one of more clusters, each of which contains one or more articles. All the articles in each overlapping community are used to form a chain.
-
-\section{Evaluation}
 \subsection{Data}
 We used the New York Times (NYT) API to load information on 208 259 articles from the U.S. and World sections from 2013 to June 2015, with 103 414 articles coming from the U.S. section and the remaining 104 845 from the World section. We captured the following information from each article: its title, the section which it came from (either U.S. or World), publication date, word count and a short summary. The data was stored in a SQLite database for further processing.
 
-\subsection{Metrics?}
-This section is still very open for discussion. The most common metric seems to be user testing on a specific topic.
+\subsection{Tools}
+The entire project was written in Python 2.7.6 and numerous libraries provided additional functionality.
 
-\subsection{SQL DB}
 \begin{itemize}[noitemsep]
-\item{NewYT all (article) - name text, section text, date datetime, wordcnt int, summary text, id int }
-\item{NewYT clustered (cluster) - content text, n articles int, first article date datetime, last article date datetime, articles id text (json), articles data text (json), id int}
+\item \textbf{Gensim} - Dimensionality reduction, log-entropy model, general string processing, similarity interface
+\item \textbf{Scikit-learn stack} - KMeans clustering, mathematics
+\item \textbf{Snap-py} - Overlapping community detection
+\item \textbf{SQLite} - Database
 \end{itemize}
 
-\section{Others}
-Have not decided where these might go, but the information here could be useful if anyone else decides to examine this area in the future.
+\subsection{Article clustering} \label{articlecluster}
+\subsubsection{Selection and pre-processing} \label{selection}
+The initial step involves splitting the articles into batches of 400 articles each. The title and summary of each article is concatenated into a single string. This string undergoes standard text pre-processing, which involves the removal of HTML tags, punctuation, multiple whitespaces, numbers and stopwords as well as the generation of bigrams and trigrams, before conversion into a bag-of-words (BOW) vector. The log-entropy model is applied to these BOW vectors to reduce the weight of words that are either rare or occur frequently. Log-entropy was chosen over other weighting models due to its excellent performance with latent semantic indexing over numerous data sets \cite{lsihb}.
+
+\subsubsection{Dimensionality reduction} \label{dimreduction}
+Dimensionality reduction is performed using latent semantic indexing (LSI). LSI is a method for automated indexing and retrieval that takes advantage of implicit higher order structure in the association of terms with documents. LSI was chosen over its successor, Latent Dirichlet Allocation (LDA) as it scales better and has greater noise tolerance. This reduces the number of dimensions from the number of unique words to the number of topics in the LSI space, which for this purpose is 50. We acknowledge that this is significantly lower than the norm for LSI (200 - 300). However, this is due to the nature of the data that we have gathered.
+
+\subsubsection{Clustering - Bisecting KMeans} \label{cluster_bkmean}
+In each batch of articles, it is common to find several articles covering the same news story. Articles which cover the same (or very similar) news story are grouped using bisecting KMeans. Bisecting KMeans is favoured over agglomerative clustering for reasons detailed in section \ref{bkmeans}. To reduce the size of the clusters, clusters containing more than 5 articles are split into smaller clusters. This size reduction is necessary to prevent the occurrence of large clusters, that are likely to contain articles which pertain to multiple stories or are extremely loosely related. Such clusters are not suitable for chaining.
+
+After the clustering is complete, the contents of the articles (their titles and summaries) in each cluster are concatenated to form the content of the article cluster. Other relevant information (further details in the documentation) for each cluster is stored in a database for use in the next step.
+
+\subsection{Chaining article clusters} \label{chainclusters}
+\subsubsection{Similarity query}
+In section \ref{articlecluster}, clusters of articles were generated. As we have not developed a method to effectively discern between chains, we restrict the search space even further to facilitate subsequent evaluation. This restriction is necessary as it ensures that the clusters used in overlapping community detection are highly relevant to the query. If the clusters are irrelevant, the quality of the chains will suffer correspondingly. This restriction is performed using a similarity query. 
+
+The first step is to convert the contents of the clusters into a LSI space. The query is converted into the same LSI space as the contents. Dimensionality reduction is needed as at the end of section \ref{cluster_bkmean}, the contents of the articles are concatenated to form a cluster and the content of a cluster is a long string. This reduces the number of dimensions for the clusters and significantly speeds up the search for clusters that are similar to the query, which is performed by cosine similarity.
+
+\subsubsection{Overlapping community detection} \label{overlapcom}
+After finding the top $N$ most similar clusters to the query, we then perform clustering using the algorithm described in \ref{chainalgo}. The value of $N$ depends on how many communities are desired and the size of each community. Should $i$ communities be desired, each containing an average of $j$ clusters, then $N = i * j$. It is possible to adjust $N$, by restricting the number of input clusters as well as $i$, which can be specified to the community detection algorithm. Adjusting both values in tandem ensures that $j$ is reasonable. For example, if $j$ is too small, each chain would on average consist of one or two articles, which would not be useful. At the same time, if $j$ is too large, the number of articles in the chain would be too large to be useful or the chain would contain a significant amount of irrelevant articles. The exact values of $N$ and $i$, and by extension $j$, would be left to the user to decide depending on his or her usage case.
+
+Every community that is detected contains one or more clusters, each of which contains one or more articles. All the articles in the community are then used to form a chain.
+
+\section{Evaluation}
+In this area of work, the principal evaluation technique is user testing \cite{newsblaster, infocartography, connectingdots, eventthreading, informationmaps}. Due to time constraints, we were not able to conduct user testing and instead we decided to use other metrics to evaluate the quality of our clusters as well as the quality of the chains.
+
+\subsection{Cluster quality}
+Radius and diameter are used to evaluate the quality of the article clusters. It is then necessary to adjust the earlier definitions of centroid, radius and diameter to fit the context of article clustering. The centroid is the article that best represents the cluster. The radius of the cluster is the maximum Euclidean distance between any article and the centroid. The diameter of the cluster is the maximum Euclidean distance between any two articles in the cluster.
+
+Given these definitions, the ideal cluster would have a low radius and diameter, which would indicate that all the articles in the cluster are largely similar and should pertain to a single issue. It is possible to get a cluster of reasonable quality with low radius and high diameter, which would point to the cluster having one or two articles that are irrelevant.
+
+\subsection{Chain quality} \label{coherence}
+To assess the quality of chains, a definition of coherence from \cite{connectingdots} was used, allowing rapid computation of the quality of each chain. The concept of coherence was discussed in section \ref{chainalgo} and for evaluation purposes, it is defined as follows:
+
+\begin{equation}
+Coherence(c_1...c_n)= \underset{i=1...n-1}{min} \sum_w{1(w \in c_i \cap c_{i+1})}
+\end{equation}
+
+For every pair of adjacent clusters in the chain, the number of words that they share from the set of words in the entire corpus, $w$, is computed. Each word they share adds one to the similarity score between them. The coherence of the chain with clusters $c_1$ to $c_n$ is the minimum of the similarity score between any pair of adjacent clusters in the chain.
+
+An ideal chain would have high coherence, indicating a high degree of similarity between even the pair of adjacent clusters that are least similar to each other.
+
+\subsection{Usage case: South China Sea}
+We ran our evaluation metrics on a subset of the data gathered, attempting to find chains of events pertaining to issues occurring in the South China Sea. By initially filtering the raw articles to only include those with the keyword "china", we were left with a subset of $\sim$6000 articles (section \ref{selection}). After performing dimensionality reduction (section \ref{dimreduction}), clustering using bisecting KMeans resulted in $\sim$1700 clusters (section \ref{cluster_bkmean}). Clustering was carried out using overlapping community detection as well, which produced $\sim$2000 clusters (section \ref{overlapcom}, replace clusters with articles).
+
+\begin{table}[H]
+\centering
+\caption{Average diameter and radius for different cluster sizes}
+\label{table1}
+\begin{tabular}{|l|l|l|l|l|l|}
+\hline
+\multicolumn{2}{|l|}{{\bf Cluster size}}                      & {\bf 2} & {\bf 3} & {\bf 4} & {\bf 5} \\ \hline
+\multirow{2}{*}{{\bf Average diameter}} & KMeans              & 0.84    & 1.09    & 1.14    & 1.16    \\ \cline{2-6} 
+                                        & Community detection & 1.04    & 1.12    & 1.14    & 1.16    \\ \hline
+\multirow{2}{*}{{\bf Average radius}}           & KMeans              & 0.42    & 0.64    & 0.70    & 0.73    \\ \cline{2-6} 
+                                        & Community detection & 0.52    & 0.65    & 0.70    & 0.74    \\ \hline
+\end{tabular}
+\end{table}
+
+In the table \ref{table1}, we detail the average radius and diameter for the clusters of size 2 to 5 produced by bisecting KMeans and overlapping community detection. Although the results are similar, it is important to note that while 99\% of clusters from bisecting KMeans have size of 2 to 5, only around 50\% of clusters from overlapping community detection fall within the same range. As the sizes of the clusters have been forced downwards when using bisecting KMeans, there would be instances where splitting the cluster was not favourable. The actual scores for overlapping community detection would be higher if the majority of clusters were within the size range.
+
+Both sets of clusters were then used to form chains using the query "south china sea" (section \ref{chainclusters}). The similarity query returned 50 clusters and we picked what we felt were the best chains from both sets of clusters and evaluated their coherence (section \ref{coherence}). We list the chains in the tables below, displaying the articles closest to the centroid of each cluster:
+
+\begin{table}[H]
+\centering
+\caption{Chain produced by clusters created using bisecting KMeans, \textbf{Coherence: 7} }
+\label{table2}
+\begin{tabular}{ll}
+{\bf Headline}                                                     & {\bf Date}  \\
+Philippines protests Chinese use of water cannon                   & 25 Feb 2014 \\
+China rebuffs US efforts on South China Sea tensions               & 10 Aug 2014 \\
+Vietnam calls for self-restraint in disputed South China Sea       & 17 Mar 2015 \\
+Chinese president promotes regional vision at Boao forum           & 27 Mar 2015 \\
+US hopes Chinese island-building will spur Asian response          & 28 May 2015 \\
+EU, Japan wary of unilateral actions in South China Sea            & 29 May 2015 \\
+China, US tone down rhetoric but far from South China Sea solution & 31 May 2015
+\end{tabular}
+\end{table}
+
+\begin{table}[H]
+\centering
+\caption{Chain produced by clusters created using overlapping community detection, \textbf{Coherence: 9} }
+\label{table3}
+\begin{tabular}{ll}
+{\bf Headline}                                                             & {\bf Date}  \\
+Vietnam: warning issues to China over oil rig in disputed waters           & 7 May 2014  \\
+Vietnam: Chinese ships ram vessels near oil rig                            & 7 May 2014  \\
+Philippines’ Aquino says China violates informal code at sea               & 19 May 2014 \\
+Hanoi says Chinese boat sinks Vietnamese fishing vessel in disputed waters & 26 May 2014 \\
+China takes dispute with Vietnam to UN                                     & 9 Jun 2014  \\
+China says told Vietnam to stop hyping up South China Sea oil rig row      & 18 Jun 2014 \\
+China tells Japan to set down historical baggage                           & 8 Mar 2015  \\
+China says progress being made on India border talks                       & 8 Mar 2015  \\
+Vietnam calls for self-restraint in disputed South China Sea               & 17 Mar 2015 \\
+China peeved as Hillary Clinton denounces women’s detention                & 7 Apr 2015 
+\end{tabular}
+\end{table}
+
+From tables \ref{table2} and \ref{table3}, it is evident to us that the chain produced when article clustering was done by bisecting KMeans is more coherent than the chain produced when article clustering was done by overlapping community detection, even though the former had a lower coherence score. This further underscores the importance of user testing in this area of work.
+
+\newpage
+\section{Future work}
+This section contains information that we feel would definitely be useful for further work on this topic. However, there was insufficient time and / or domain knowledge to consider the approaches mentioned in this section in detail.
+
+\subsection{Automatic chain evaluation}
+Shahaf proposes a method for automatic chain evaluation in \cite{infocartography}. This method involves optimising a submodular function and was not investigated in detail due to a lack of domain knowledge.
+
+\subsection{Improving cluster quality}
+An easy way to improve the quality of the chains would be to improve cluster quality. We suggest several possible ways to improve cluster quality.
+
+\textbf{doc2vec}: This is an enhancement of the work in \cite{word2vec}. It is a new method of dimensionality reduction that utilises deep learning to capture the semantic meaning between words. An efficient implementation is provided in Gensim and further testing should be done to determine if its performance is superior to a combination of log-entropy weighting and latent semantic indexing. If doc2vec is able to provide better differentiation between articles after dimensionality reduction, it should result in higher quality clusters being produced.
+
+\textbf{Custom weighting}: The current dimensionality reduction process does not fully take into account the importance of certain words in news articles. For example, words associated with names and places should be viewed with greater importance. By utilising a natural language parser (Stanford parser), these words can be identified and their weight raised, leading to better differentiation between articles and in turn higher quality clusters.
+
+\textbf{Supervised learning for clusters}: An observation from our testing was that it was easy for a human observer to differentiate between clusters that were relevant and those that were not. Should a human observer tag a sufficient amount of relevant and irrelevant clusters, it is possible to perform supervised learning on the clusters and include other features such as the number of articles in the cluster, the length of the articles in the cluster, the number of comments each article in the cluster received and so on. These additional features may be useful in differentiating between relevant and irrelevant clusters. This approach would improve cluster quality by eliminating low quality clusters.
+
+\subsection{Multiple data sources}
+Articles were only drawn from a single data source, the New York Times. Drawing articles from multiple sources will allow for additional insights as news sources often differ in their coverage of the same event. For example, it is unlikely that the New York Times, being based in the United States of America (USA), would portray the USA in an extremely poor light. However, a news source from China may disagree and describe the USA negatively. It would then be possible to create chains on the same issue that differ in tone and / or opinion, a useful feature for analysts.
+
+
+\section{Related information}
+This section contains other information which may be useful for further work on this topic but was not directly used in the project.
 
 \subsection{Alternative article clustering method}
-The algorithm in section \ref{chainalgo} is an extension of an algorithm used to cluster articles together. It entails creating a word co-occurence graph for a set of articles. In such a graph, words are nodes and edges are created between the nodes if they occur in the same document. The top 50 tf-idf words were used for each article \cite{infocartography}. Bigclam is used to find overlapping communities in the graph \cite{overlapcom}. This results in clusters of words and it is unclear to us exactly how these word clusters are linked to the original articles. A possible method of doing so would be to calculate the similarity between the word clusters and the top 50 tf-idf words from each article. If the similarity exceeds some threshold, the article is linked to that word cluster.
+The algorithm in section \ref{chainalgo} is an extension of an algorithm used to cluster articles together. It entails creating a word co-occurence graph for a set of articles. In such a graph, words are nodes and edges are created between the nodes if they occur in the same document. The top 50 tf-idf words were used for each article \cite{infocartography}. Bigclam is used to find overlapping communities in the graph \cite{overlapcom}. This results in clusters of words and it is unclear to us exactly how these word clusters are linked to the original articles, making it impossible to create article clusters for subsequent analysis. A possible method of doing so would be to calculate the similarity between the word clusters and the top 50 tf-idf words from each article. If the similarity exceeds some threshold, the article is linked to that word cluster.
 
 \subsection{Temporal summarisation}
 Temporal summarisation systems aim to monitor information associated with an event over time \cite{trects2014}. Work in this area aims to create systems that can provide relevant updates as a situation progresses and tracks important event-related attributes. When used to examine a single topic, it can yield greater insight into how events unfolded. Unfortunately, it requires that the topic be identified before it can be utilised \cite{temporalsum}.
 
-\section{Progress}
-
-\subsection{Complete}
-\begin{itemize}[noitemsep]
-\item{Clean raw articles and put into sqlite DB}
-\item{Convert cleaned articles to vectors using LSI topic model, articles are processed in batches of 1 week each}
-\item{Agglomerative clustering on these vectors}
-\item{Expand largest clusters as needed}
-\item{Some error occur while performing clustering. Remove articles that cause errors and try again / save the cluster}
-\item{Save these clusters as the top articles}
-\item{Store the top articles into some DB as well}
-\item{Convert top articles into vectors (LSI)}
-\item{Process these using some algorithm to make the chains. Something simple will suffice for now, just to get something out to examine. Toposort?}
-\end{itemize}
-
-\subsection{To do - short term}
-\begin{itemize}[noitemsep]
-\item{Writeup on the background}
-\end{itemize}
-
-\subsection{To do - long term}
-\begin{itemize}[noitemsep]
-\item{Come up with a better way to determine whether a saved cluster (top article) is accurate - a possible solution might be supervised learning, come up with a tool to aid in the annotation}
-\item{Switch tfidf to use logent weights}
-\item{Improvements on the chains of articles?}
-\end{itemize}
-
-\section{Reference list}
-% Master reference list
-\begin{itemize}[noitemsep]
-\item Mining massive dataset \cite{mining2012}.
-\item Newsblaster \cite{newsblaster}.
-\item Contextual bandit \cite{contextual:li2010}.
-\item Clustering survey \cite{clusteringsurvey}.
-\item Clustering technique comparison \cite{ctechniquecomp}.
-\item Online LDA \cite{onlinelda}.
-\item TDT, trend analysis with neural network \cite{tdttanalysis}.
-\item TREC temporal summarisation track overview. \cite{trects2014}
-\item Topic detection and tracking evaluation overview \cite{tdtoverview}
-\item Connecting dots between news articles \cite{connectingdots}
-\item Trains of thought: generating information maps \cite{informationmaps}
-\item Event threading within news topic \cite{eventthreading}
-\item Information cartography \cite{infocartography}
-\end{itemize}
 
 \newpage
 
